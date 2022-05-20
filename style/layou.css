@@ -1,0 +1,62 @@
+.app {
+  width: 320px;
+  height: 180px;
+}
+#currentURL {
+  text-align: center;
+}
+.form {
+  text-align: center;
+}
+.row {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.btn {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+#preservation {
+  color: #fff;
+  border-color: #409eff;
+  background-color: #409eff;
+  outline: none;
+}
+#preservation:hover {
+  border-color: #79bbff;
+  background-color: #79bbff;
+}
+#implement {
+  color: #fff;
+  border-color: #67c23a;
+  background-color: #67c23a;
+  outline: none;
+}
+#implement:hover {
+  border-color: #95d475;
+  background-color: #95d475;
+}
+.el-btn {
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 28px;
+  height: 28px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #fff;
+  border-color: #79bbff;
+  background-color: #79bbff;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.1s;
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  padding: 4px 15px;
+  border-radius: 5px;
+}

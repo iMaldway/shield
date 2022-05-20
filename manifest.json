@@ -1,0 +1,28 @@
+{
+  "name": "shield",
+  "description": "为开发人员打造的一款网站内容屏蔽插件！",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "tabs"],
+  "action": {
+    "default_popup": "/popups/popup.html",
+    "16": "/images/im2.png",
+    "48": "/images/im2.png",
+    "128": "/images/im2.png"
+  },
+  "icons": {
+    "16": "/images/im2.png",
+    "48": "/images/im2.png",
+    "128": "/images/im2.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["/script/contentScript.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_start"
+    }
+  ]
+}

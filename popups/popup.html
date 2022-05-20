@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../style/layou.css" />
+    <script src="../script/popup.js"></script>
+  </head>
+  <body class="app">
+    <h3 id="currentURL"></h3>
+    <div class="form">
+      <div class="row">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        屏蔽关键字：
+        <input placeholder="按照\隔开" id="shieldKey" maxlength="20"></input>
+      </div>
+      <div class="row">
+        关键字主体样式类：
+        <input placeholder="className" id="shieldKeyClsaaName" maxlength="30" />
+      </div>
+      <div class="row">
+        屏蔽指定组件的类：
+        <input placeholder="className" id="shieldAppointClsaaName" maxlength="30" />
+      </div>
+    </div>
+    <div class="row btn">
+      <span id="preservation" class="el-btn">保存</span>
+      <span id="implement" class="el-btn">执行</span>
+    </div>
+  </body>
+</html>
