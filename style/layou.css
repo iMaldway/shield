@@ -1,39 +1,49 @@
 .app {
   width: 320px;
-  height: 180px;
+  height: 280px;
+}
+textarea {
+  width: 150px;
+  height: 40px;
+  resize: vertical;
+}
+input {
+  width: 150px;
 }
 #currentURL {
   text-align: center;
 }
 .form {
   text-align: center;
+  margin-bottom: 10px;
 }
 .row {
   margin-top: 5px;
   margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
 }
 .btn {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
   text-align: center;
 }
-#preservation {
+.el-btn-primary {
   color: #fff;
   border-color: #409eff;
   background-color: #409eff;
   outline: none;
 }
-#preservation:hover {
+.el-btn-primary:hover {
   border-color: #79bbff;
   background-color: #79bbff;
 }
-#implement {
+.el-btn-success {
   color: #fff;
   border-color: #67c23a;
   background-color: #67c23a;
   outline: none;
 }
-#implement:hover {
+.el-btn-success:hover {
   border-color: #95d475;
   background-color: #95d475;
 }
@@ -47,9 +57,6 @@
   height: 28px;
   white-space: nowrap;
   cursor: pointer;
-  color: #fff;
-  border-color: #79bbff;
-  background-color: #79bbff;
   text-align: center;
   box-sizing: border-box;
   outline: none;
@@ -59,4 +66,22 @@
   -webkit-appearance: none;
   padding: 4px 15px;
   border-radius: 5px;
+}
+.el-btn-danger {
+  color: #fff;
+  border-color: #f56c6c;
+  background-color: #f56c6c;
+  outline: none;
+}
+.el-btn-danger:hover {
+  border-color: #f89898;
+  background-color: #f89898;
+}
+.label {
+}
+.separate {
+  width: 100%;
+  height: 1px;
+  background-color: #dadada;
+  display: inline-block;
 }

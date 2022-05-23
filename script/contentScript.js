@@ -1,98 +1,191 @@
 console.log('----注入脚本----')
 const TIME = 1000;
-const CURRENT_URL = window.location.href
+const CURRENT_URL = domainName(window.location.href)
 // 关键字屏蔽定时器
 let shieldKeyInterval;
 // 屏蔽指定组件
 let shieldAppointInterval;
-// 关键字屏蔽函数
-function shieldKey(className,keys){
-    if(!className || className === ''){
+// 纯净模式
+let pureInterval;
+/**
+ * @todo 关键字屏蔽函数
+*/
+function shieldKey(className, keys) {
+    if (!className || className === '') {
         console.log('----没有输入className----')
         return
     }
-    if(!keys || keys === ''){
+    if (!keys || keys === '') {
         console.log('----没有输入关键字----')
         return
     }
     let arr = [];
-    if(typeof keys === 'string'){
+    if (typeof keys === 'string') {
         arr = keys.split('/')
     }
-    if(shieldKeyInterval){
+    if (shieldKeyInterval) {
         clearInterval(shieldKeyInterval)
     }
-    shieldKeyInterval = setInterval(()=>{
+    shieldKeyInterval = setInterval(() => {
         let y = document.getElementsByClassName(className)
-        for(let i = 0;i < y.length;i++){
+        for (let i = 0; i < y.length; i++) {
             let item = y[i]
             const innerText = item.innerText;
-            for(let m = 0;m<arr.length;m++){
+            for (let m = 0; m < arr.length; m++) {
                 let key = arr[m]
-                if(innerText.indexOf(key) !== -1){
+                if (innerText.indexOf(key) !== -1) {
                     item.style.display = 'none'
                     break;
                 }
             }
         }
-    },TIME)
+    }, TIME)
 }
 
-// 屏蔽指定组件
-function shieldAppoint(className){
-    if(!className || className === ''){
+/**
+ * @todo 屏蔽指定组件,支持多个组件，className按照/分隔
+ * */
+function shieldAppoint(classNames) {
+    if (!classNames || classNames === '') {
         console.log('----没有输入className----')
         return
     }
-    if(shieldAppointInterval){
+    if (shieldAppointInterval) {
         clearInterval(shieldAppointInterval)
     }
-    shieldAppointInterval = setInterval(()=>{
-        let appointArr = document.getElementsByClassName(className);
-        for(let i = 0;i < appointArr.length;i++){
-            let item = appointArr[i]
-            item.style.display = 'none'
+    let arr = [];
+    if (typeof classNames === 'string') {
+        arr = classNames.split('/')
+    }
+    shieldAppointInterval = setInterval(() => {
+        for (let c in arr) {
+            const name = arr[c]
+            let appointArr = document.getElementsByClassName(name);
+            for (let i = 0; i < appointArr.length; i++) {
+                let item = appointArr[i]
+                item.style.display = 'none'
+            }
         }
-    },TIME)
+    }, TIME)
+}
+/**
+ * @todo 开启纯净模式
+ */
+function pure() {
+    if (pureInterval) {
+        clearInterval(pureInterval)
+    }
+    pureInterval = setInterval(() => {
+        // 屏蔽所有的背景，并添加统一背景色
+        $('html').css('background-image', 'none')
+        $('html').css('background-color', '#fffbe8')
+        $('body').css('background-image', 'none')
+        $('body').css('background-color', '#fffbe8')
+        $('body *').css('background-image', 'none')
+        $('body *').css('background-color', '#fffbe8')
+        $('body *').css('border', '1px solid #fffff5')
+        $('body *').css('color', '#4d4d4d')
+        //屏蔽所有的img元素
+        $('img').css('display', 'none')
+        $('img').css('border', '1px solid #666')
+        //屏蔽所有的video元素
+        $('video').css('display', 'none')
+        //屏蔽所有的video元素
+        $('svg').css('display', 'none')
+        $('title').html('')
+        $("link[rel*='icon']").attr('href', '-f-a-v-i-c-o-n-.ico')
+        // $("link[rel*='icon']").remove()
+    }, TIME);
+}
+/**
+ * @todo 取消执行所有屏蔽函数
+ */
+function cancelInterval(type) {
+    switch (type) {
+        case 'implement':
+            if (shieldAppointInterval) {
+                clearInterval(shieldAppointInterval)
+            }
+            if (shieldKeyInterval) {
+                clearInterval(shieldKeyInterval)
+            }
+            break;
+        case 'pure':
+            if (pureInterval) {
+                clearInterval(pureInterval)
+            }
+            break;
+        default:
+            // 默认全部清除
+            if (shieldAppointInterval) {
+                clearInterval(shieldAppointInterval)
+            }
+            if (shieldKeyInterval) {
+                clearInterval(shieldKeyInterval)
+            }
+            if (pureInterval) {
+                clearInterval(pureInterval)
+            }
+            break;
+    }
 }
 
-function cancelInterval(){
-    console.log('----取消执行屏蔽----')
-    if(shieldAppointInterval){
-        clearInterval(shieldAppointInterval)
-    }
-    if(shieldKeyInterval){
-        clearInterval(shieldKeyInterval)
-    }
-}
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
-{
-    if(request && request.operation){
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request && request.operation) {
         //执行屏蔽函数
         console.log('----执行屏蔽函数----')
         const operation = request.operation
-        if(operation.implement){
-            shieldKey(operation.shieldKeyClsaaName,operation.shieldKey)
+        if (operation.implement) {
+            shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
             shieldAppoint(operation.shieldAppointClsaaName)
-        }else{
-            cancelInterval()
+        } else {
+            if (shieldAppointInterval || shieldKeyInterval) {
+                location.reload(true)
+            }
+            cancelInterval('implement')
+        }
+        if (operation.pure) {
+            pure()
+        } else {
+            if (pureInterval) {
+                location.reload(true)
+            }
+            cancelInterval('pure')
         }
     }
-	sendResponse('----执行屏蔽操作----'); // 回调回去
+    sendResponse('----执行屏蔽操作----'); // 回调回去
 
 });
-chrome.storage.sync.get([CURRENT_URL],function(result) {
+chrome.storage.sync.get([CURRENT_URL], function (result) {
     console.log('----执行上次设置---- ');
-    if(result && result[CURRENT_URL] ){
+    if (result && result[CURRENT_URL]) {
         const operation = result[CURRENT_URL]
-        if(operation.implement){
-            shieldKey(operation.shieldKeyClsaaName,operation.shieldKey)
+        if (operation.implement) {
+            shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
             shieldAppoint(operation.shieldAppointClsaaName)
-        }else{
-            cancelInterval()
+        } else {
+            cancelInterval('implement')
+        }
+        if (operation.pure) {
+            pure()
+        } else {
+            cancelInterval('pure')
         }
     }
 })
+/**
+ * @todo 获取域名
+ */
+function domainName(url) {
+    let sign = "://";
+    let pos = url.indexOf(sign);
+    if (pos >= 0) {
+        pos += sign.length;
+        url = url.slice(pos);
+    }
+    url = url.replace('//', '')
+    let array = url.split("/");
+    return array[0];
+}
 
 

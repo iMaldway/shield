@@ -3,28 +3,48 @@
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../style/layou.css" />
+    <script src="../utils/jquery-3.6.0.min.js"></script>
     <script src="../script/popup.js"></script>
   </head>
   <body class="app">
     <h3 id="currentURL"></h3>
     <div class="form">
       <div class="row">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        屏蔽关键字：
-        <input placeholder="按照\隔开" id="shieldKey" maxlength="20"></input>
+        <span class="label">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          屏蔽关键字：
+        </span>
+        <textarea
+          placeholder="按照\隔开"
+          id="shieldKey"
+          maxlength="200"
+        ></textarea>
       </div>
       <div class="row">
-        关键字主体样式类：
-        <input placeholder="className" id="shieldKeyClsaaName" maxlength="30" />
+        <span class="label">关键字主体样式类：</span>
+        <input
+          placeholder="className"
+          id="shieldKeyClsaaName"
+          maxlength="100"
+        ></input>
       </div>
+      <span class="separate"></span>
       <div class="row">
-        屏蔽指定组件的类：
-        <input placeholder="className" id="shieldAppointClsaaName" maxlength="30" />
+        <span class="label">屏蔽指定组件的类：</span>
+        <textarea
+          placeholder="className 多个按照/分隔"
+          id="shieldAppointClsaaName"
+          maxlength="200"
+        ></textarea>
       </div>
     </div>
     <div class="row btn">
-      <span id="preservation" class="el-btn">保存</span>
-      <span id="implement" class="el-btn">执行</span>
+      <span id="preservation" class="el-btn el-btn-primary">保存</span>
+      <span id="implement" class="el-btn el-btn-success">执行</span>
+    </div>
+    <span class="separate"></span>
+    <div class="row btn">
+      <span id="pure" class="el-btn el-btn-primary">纯净模式</span>
     </div>
   </body>
 </html>

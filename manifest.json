@@ -20,7 +20,7 @@
   },
   "content_scripts": [
     {
-      "js": ["/script/contentScript.js"],
+      "js": ["/utils/jquery-3.6.0.min.js", "/script/contentScript.js"],
       "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_start"
     }
