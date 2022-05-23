@@ -83,7 +83,8 @@ function pure() {
         $('body').css('background-color', '#fffbe8')
         $('body *').css('background-image', 'none')
         $('body *').css('background-color', '#fffbe8')
-        $('body *').css('border', '1px solid #fffff5')
+        // $('body *').css('box-shadow', '0 1px 3px rgb(18 18 18 / 10%)')
+        // $('body *').css('border', '1px solid #fffff5')
         $('body *').css('color', '#4d4d4d')
         //屏蔽所有的img元素
         $('img').css('display', 'none')
