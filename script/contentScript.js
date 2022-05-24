@@ -88,14 +88,16 @@ function pure() {
         $('body *').css('color', '#4d4d4d')
         //屏蔽所有的img元素
         $('img').css('display', 'none')
-        $('img').css('border', '1px solid #666')
+        // $('img').css('border', '1px solid #666')
         //屏蔽所有的video元素
         $('video').css('display', 'none')
         //屏蔽所有的video元素
         $('svg').css('display', 'none')
-        $('title').html('')
-        $("link[rel*='icon']").attr('href', '-f-a-v-i-c-o-n-.ico')
-        // $("link[rel*='icon']").remove()
+        $('title').html(PUBLIC_TITLE)
+        $("link[rel*='icon']").attr('href', PUBLIC_ICO)
+        $("link[rel*='icon']").attr('rel', 'shortcut icon')
+        $("link[rel*='icon']").removeAttr('sizes').removeAttr('type').removeAttr('crossorigin')
+        $("link[rel*='search']").remove()
     }, TIME);
 }
 /**
