@@ -1,10 +1,6 @@
-let operation = {
-    shieldKeyClsaaName: "",
-    shieldKey: "",
-    shieldAppointClsaaName: "",
-    implement: false,
-    pure: false
-};
+/**
+ * @todo 具体引用来源请查阅shield\popups\popup.html
+ */
 let tabId = "";
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     // 获取页面地址
@@ -38,6 +34,11 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             sendMessage(tabId, operation);
         } else {
             let obj = {};
+            /**
+             * 使用默认的配置
+             */
+            operation.webTitle = PUBLIC_TITLE
+            operation.icon = PUBLIC_ICO
             obj[currentURL] = operation;
             chrome.storage.sync.set(obj, function () {
                 console.log("设置对象 ", operation);
@@ -47,6 +48,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         $("#shieldKeyClsaaName").val(operation.shieldKeyClsaaName);
         $("#shieldKey").val(operation.shieldKey);
         $("#shieldAppointClsaaName").val(operation.shieldAppointClsaaName);
+
+        $("#webTitle").val(operation.webTitle);
+        $("#icon").val(operation.icon);
     });
 
     // 绑定保存事件
@@ -55,6 +59,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         operation.shieldKeyClsaaName = $("#shieldKeyClsaaName").val();
         operation.shieldKey = $("#shieldKey").val();
         operation.shieldAppointClsaaName = $("#shieldAppointClsaaName").val();
+        operation.webTitle = $("#webTitle").val();
+        operation.icon = $("#icon").val();
         let obj = {};
         obj[currentURL] = operation;
         chrome.storage.sync.set(obj, function () {

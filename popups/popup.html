@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../style/layou.css" />
     <script src="../utils/jquery-3.6.0.min.js"></script>
+    <script src="../assets/configure.js"></script>
     <script src="../script/popup.js"></script>
   </head>
   <body class="app">
@@ -11,7 +12,6 @@
     <div class="form">
       <div class="row">
         <span class="label">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           屏蔽关键字：
         </span>
         <textarea
@@ -35,6 +35,24 @@
           placeholder="className 多个按照/分隔"
           id="shieldAppointClsaaName"
           maxlength="200"
+        ></textarea>
+      </div>
+      <span class="separate"></span>
+      <div class="row">
+        <span class="label">网站标题：</span>
+        <input
+          placeholder="自定义网站标题"
+          id="webTitle"
+          maxlength="50"
+        ></input>
+      </div>
+      <span class="separate"></span>
+      <div class="row">
+        <span class="label">网站icon：</span>
+        <textarea
+          placeholder="自定义网站icon，base64格式，10kb以内;不填默认;"
+          id="icon"
+          maxlength="1000"
         ></textarea>
       </div>
     </div>

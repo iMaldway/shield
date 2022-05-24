@@ -1,7 +1,7 @@
 {
   "name": "shield",
   "description": "为开发人员打造的一款网站内容屏蔽插件！",
-  "version": "1.1",
+  "version": "1.2",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
@@ -22,8 +22,7 @@
     {
       "js": [
         "/utils/jquery-3.6.0.min.js",
-        "/assets/ico.js",
-        "/assets/title.js",
+        "/assets/configure.js",
         "/script/contentScript.js"
       ],
       "matches": ["http://*/*", "https://*/*"],

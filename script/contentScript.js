@@ -71,7 +71,7 @@ function shieldAppoint(classNames) {
 /**
  * @todo 开启纯净模式
  */
-function pure() {
+function pure(webTitle, icon) {
     if (pureInterval) {
         clearInterval(pureInterval)
     }
@@ -93,8 +93,8 @@ function pure() {
         $('video').css('display', 'none')
         //屏蔽所有的video元素
         $('svg').css('display', 'none')
-        $('title').html(PUBLIC_TITLE)
-        $("link[rel*='icon']").attr('href', PUBLIC_ICO)
+        $('title').html(webTitle || PUBLIC_TITLE)
+        $("link[rel*='icon']").attr('href', icon || PUBLIC_ICO)
         $("link[rel*='icon']").attr('rel', 'shortcut icon')
         $("link[rel*='icon']").removeAttr('sizes').removeAttr('type').removeAttr('crossorigin')
         $("link[rel*='search']").remove()
@@ -148,7 +148,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             cancelInterval('implement')
         }
         if (operation.pure) {
-            pure()
+            pure(operation.webTitle, operation.icon)
         } else {
             if (pureInterval) {
                 location.reload(true)
@@ -170,7 +170,7 @@ chrome.storage.sync.get([CURRENT_URL], function (result) {
             cancelInterval('implement')
         }
         if (operation.pure) {
-            pure()
+            pure(operation.webTitle, operation.icon)
         } else {
             cancelInterval('pure')
         }

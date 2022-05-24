@@ -1,1 +1,0 @@
-let PUBLIC_TITLE = "protected web content"
