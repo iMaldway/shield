@@ -8,7 +8,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     let currentURL = domainName(tabs[0]?.url) || "未获取到该页面地址";
     $("#currentURL").text(currentURL);
     // 是否存在过数据
-    chrome.storage.sync.get([currentURL], function (result) {
+    chrome.storage.local.get([currentURL], function (result) {
         if (result && result[currentURL]) {
             operation = result[currentURL];
             const implement = $("#implement");
@@ -40,7 +40,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             operation.webTitle = PUBLIC_TITLE
             operation.icon = PUBLIC_ICO
             obj[currentURL] = operation;
-            chrome.storage.sync.set(obj, function () {
+            chrome.storage.local.set(obj, function () {
                 console.log("设置对象 ", operation);
             });
         }
@@ -63,7 +63,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         operation.icon = $("#icon").val();
         let obj = {};
         obj[currentURL] = operation;
-        chrome.storage.sync.set(obj, function () {
+        chrome.storage.local.set(obj, function () {
             console.log("设置对象 ", operation);
         });
     });
@@ -84,7 +84,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         }
         let obj = {};
         obj[currentURL] = operation;
-        chrome.storage.sync.set(obj, function () {
+        chrome.storage.local.set(obj, function () {
             console.log("设置对象 ", operation);
             sendMessage(tabId, operation);
         });
@@ -106,7 +106,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         }
         let obj = {};
         obj[currentURL] = operation;
-        chrome.storage.sync.set(obj, function () {
+        chrome.storage.local.set(obj, function () {
             console.log("设置对象 ", operation);
             sendMessage(tabId, operation);
         });
@@ -114,7 +114,6 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 });
 function sendMessage(id, data, cbk) {
     chrome.tabs.sendMessage(id, { operation: data }, function (response) {
-        console.log(response);
         if (cbk) {
             cbk(response);
         }

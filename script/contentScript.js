@@ -1,4 +1,5 @@
 console.log('----注入脚本----')
+let tabId;
 const TIME = 1000;
 const CURRENT_URL = domainName(window.location.href)
 // 关键字屏蔽定时器
@@ -76,29 +77,14 @@ function pure(webTitle, icon) {
         clearInterval(pureInterval)
     }
     pureInterval = setInterval(() => {
-        // 屏蔽所有的背景，并添加统一背景色
-        $('html').css('background-image', 'none')
-        $('html').css('background-color', '#fffbe8')
-        $('body').css('background-image', 'none')
-        $('body').css('background-color', '#fffbe8')
-        $('body *').css('background-image', 'none')
-        $('body *').css('background-color', '#fffbe8')
-        // $('body *').css('box-shadow', '0 1px 3px rgb(18 18 18 / 10%)')
-        // $('body *').css('border', '1px solid #fffff5')
-        $('body *').css('color', '#4d4d4d')
-        //屏蔽所有的img元素
-        $('img').css('display', 'none')
-        // $('img').css('border', '1px solid #666')
-        //屏蔽所有的video元素
-        $('video').css('display', 'none')
-        //屏蔽所有的video元素
-        $('svg').css('display', 'none')
         $('title').html(webTitle || PUBLIC_TITLE)
         $("link[rel*='icon']").attr('href', icon || PUBLIC_ICO)
         $("link[rel*='icon']").attr('rel', 'shortcut icon')
         $("link[rel*='icon']").removeAttr('sizes').removeAttr('type').removeAttr('crossorigin')
         $("link[rel*='search']").remove()
     }, TIME);
+    // 动态执行CSS文件
+    sendMessage({ insertCSS: 'insert' })
 }
 /**
  * @todo 取消执行所有屏蔽函数
@@ -117,6 +103,7 @@ function cancelInterval(type) {
             if (pureInterval) {
                 clearInterval(pureInterval)
             }
+            sendMessage({ insertCSS: 'remove' })
             break;
         default:
             // 默认全部清除
@@ -129,6 +116,7 @@ function cancelInterval(type) {
             if (pureInterval) {
                 clearInterval(pureInterval)
             }
+            sendMessage({ insertCSS: 'remove' })
             break;
     }
 }
@@ -155,14 +143,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             }
             cancelInterval('pure')
         }
+        sendResponse('----执行屏蔽操作----'); // 回调回去
     }
-    sendResponse('----执行屏蔽操作----'); // 回调回去
+    if (request && request.activeInfo) {
+        console.log(request.activeInfo)
+        tabId = request.activeInfo.tabId
+        sendResponse('----执行页面激活操作----'); // 回调回去
+    }
 
 });
-chrome.storage.sync.get([CURRENT_URL], function (result) {
+chrome.storage.local.get([CURRENT_URL], function (result) {
     console.log('----执行上次设置---- ');
     if (result && result[CURRENT_URL]) {
         const operation = result[CURRENT_URL]
+        console.log(operation);
         if (operation.implement) {
             shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
             shieldAppoint(operation.shieldAppointClsaaName)
@@ -176,6 +170,14 @@ chrome.storage.sync.get([CURRENT_URL], function (result) {
         }
     }
 })
+function sendMessage(data, cbk) {
+    chrome.runtime.sendMessage(data, function (response) {
+        console.log('收到来自后台的回复：' + response);
+        if (cbk) {
+            cbk(response)
+        }
+    });
+}
 /**
  * @todo 获取域名
  */

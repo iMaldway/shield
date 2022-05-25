@@ -1,0 +1,35 @@
+html,
+body {
+  background-image: none !important;
+  background-color: #fffbe8 !important;
+}
+body * {
+  background-image: none !important;
+  background-color: #fffbe8 !important;
+  color: #4d4d4d !important;
+  border-color: #ccccd8 !important;
+}
+body *::after {
+  background: #fffbe8 !important;
+  background-color: #fffbe8 !important;
+}
+body *::before {
+  background: #fffbe8 !important;
+  background-color: #fffbe8 !important;
+}
+img,
+video {
+  display: none !important;
+}
+svg,
+g,
+circle,
+path {
+  fill: #999 !important;
+}
+/**csdn*/
+button[id*="search"] {
+  border: 1px solid #ccccd8 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
