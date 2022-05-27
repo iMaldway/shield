@@ -1,5 +1,5 @@
 <p align="center">
-  <spen style="font-size: 34px;color:#0969da;">shield</spen>
+  <h1>shield</h1>
 </p>
 <p align="center">为开发人员打造的一款网站内容屏蔽插件！</p>
 
