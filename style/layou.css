@@ -1,16 +1,17 @@
 .app {
-  width: 320px;
+  width: 420px;
   height: auto;
   min-height: 400px;
   padding: 10px;
+  border-radius: 5px;
 }
 textarea {
-  width: 150px;
+  width: 260px;
   height: 40px;
   resize: vertical;
 }
 input {
-  width: 150px;
+  width: 260px;
 }
 #currentURL {
   text-align: center;
