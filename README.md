@@ -1,4 +1,6 @@
-<h1 align="center">Shield</h1>
+<p align="center">
+  <spen>Shield</spen>
+</p>
 <p align="center">为开发人员打造的一款网站内容屏蔽插件！</p>
 
 ---
