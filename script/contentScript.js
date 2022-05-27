@@ -2,6 +2,8 @@ console.log('----注入脚本----')
 let tabId;
 const TIME = 1000;
 const CURRENT_URL = domainName(window.location.href)
+// 配置对象
+// let operation;
 // 关键字屏蔽定时器
 let shieldKeyInterval;
 // 屏蔽指定组件
@@ -120,12 +122,33 @@ function cancelInterval(type) {
             break;
     }
 }
-
+function sendMessage(data, cbk) {
+    chrome.runtime.sendMessage(data, function (response) {
+        console.log('收到来自后台的回复：' + response);
+        if (cbk) {
+            cbk(response)
+        }
+    });
+}
+/**
+ * @todo 获取域名
+ */
+function domainName(url) {
+    let sign = "://";
+    let pos = url.indexOf(sign);
+    if (pos >= 0) {
+        pos += sign.length;
+        url = url.slice(pos);
+    }
+    url = url.replace('//', '')
+    let array = url.split("/");
+    return array[0];
+}
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request && request.operation) {
         //执行屏蔽函数
         console.log('----执行屏蔽函数----')
-        const operation = request.operation
+        operation = request.operation
         if (operation.implement) {
             shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
             shieldAppoint(operation.shieldAppointClsaaName)
@@ -155,7 +178,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 chrome.storage.local.get([CURRENT_URL], function (result) {
     console.log('----执行上次设置---- ');
     if (result && result[CURRENT_URL]) {
-        const operation = result[CURRENT_URL]
+        operation = result[CURRENT_URL]
         console.log(operation);
         if (operation.implement) {
             shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
@@ -170,27 +193,64 @@ chrome.storage.local.get([CURRENT_URL], function (result) {
         }
     }
 })
-function sendMessage(data, cbk) {
-    chrome.runtime.sendMessage(data, function (response) {
-        console.log('收到来自后台的回复：' + response);
-        if (cbk) {
-            cbk(response)
-        }
-    });
-}
 /**
- * @todo 获取域名
+ * @todo 快捷键监听
  */
-function domainName(url) {
-    let sign = "://";
-    let pos = url.indexOf(sign);
-    if (pos >= 0) {
-        pos += sign.length;
-        url = url.slice(pos);
+$(document).keydown(function (event) {
+    let obj = {};
+    switch (event.keyCode) {
+        case 27:
+        case '27':
+            // Esc 快捷关闭/开启纯净模式
+            const pure_ = $("#pure");
+            operation.pure = !operation.pure;
+            if (operation.pure) {
+                pure_.html("已开启纯净模式")
+                pure_.addClass('el-btn-success')
+                pure_.removeClass('el-btn-primary')
+                pure(operation.webTitle, operation.icon)
+            } else {
+                pure_.html("纯净模式")
+                pure_.addClass('el-btn-primary')
+                pure_.removeClass('el-btn-success')
+                cancelInterval('pure')
+            }
+
+            obj[CURRENT_URL] = operation;
+            chrome.storage.local.set(obj, function () { });
+            break;
+        case 192:
+        case '192':
+            // ~ 快捷关闭/开启纯屏蔽功能
+            const implement = $("#implement");
+            operation.implement = !operation.implement;
+            if (operation.implement) {
+                implement.html("停止")
+                implement.addClass('el-btn-danger')
+                implement.removeClass('el-btn-success')
+                shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
+                shieldAppoint(operation.shieldAppointClsaaName)
+            } else {
+                implement.html("执行")
+                implement.addClass('el-btn-success')
+                implement.removeClass('el-btn-danger')
+                if (shieldAppointInterval || shieldKeyInterval) {
+                    location.reload(true)
+                }
+                cancelInterval('implement')
+            }
+            obj[CURRENT_URL] = operation;
+            chrome.storage.local.set(obj, function () { });
+            break;
+        case 46:
+        case '46':
+            // delete 关闭当前页面
+            window.close()
+            break;
+        default:
+            console.log("Key: " + event.keyCode);
+            break;
     }
-    url = url.replace('//', '')
-    let array = url.split("/");
-    return array[0];
-}
+});
 
 
