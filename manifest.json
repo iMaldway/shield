@@ -1,7 +1,7 @@
 {
   "name": "shield",
   "description": "为开发人员打造的一款网站内容屏蔽插件！",
-  "version": "1.3",
+  "version": "1.4",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
