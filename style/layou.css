@@ -5,31 +5,9 @@
   padding: 10px;
   border-radius: 5px;
 }
-textarea {
-  width: 260px;
-  height: 40px;
-  resize: vertical;
-}
-input {
-  width: 260px;
-}
+
 #currentURL {
   text-align: center;
-}
-.form {
-  text-align: center;
-  margin-bottom: 10px;
-}
-.form .row {
-  padding-left: 20px;
-  padding-right: 20px;
-  justify-content: flex-end;
-}
-.row {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  display: flex;
-  justify-content: center;
 }
 .btn {
   margin-top: 10px;
@@ -55,6 +33,16 @@ input {
   border-color: #95d475;
   background-color: #95d475;
 }
+.el-btn-danger {
+  color: #fff;
+  border-color: #f56c6c;
+  background-color: #f56c6c;
+  outline: none;
+}
+.el-btn-danger:hover {
+  border-color: #f89898;
+  background-color: #f89898;
+}
 .el-btn {
   margin-left: 5px;
   margin-right: 5px;
@@ -75,16 +63,6 @@ input {
   padding: 4px 15px;
   border-radius: 5px;
 }
-.el-btn-danger {
-  color: #fff;
-  border-color: #f56c6c;
-  background-color: #f56c6c;
-  outline: none;
-}
-.el-btn-danger:hover {
-  border-color: #f89898;
-  background-color: #f89898;
-}
 /* .label {
 } */
 .separate {
@@ -92,4 +70,72 @@ input {
   height: 1px;
   background-color: #dadada;
   display: inline-block;
+}
+/**form*/
+.form * {
+  box-sizing: border-box;
+}
+.form {
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.form-label {
+  min-width: 100px;
+  height: 100%;
+  text-align: right;
+  display: inline-block;
+  padding-right: 10px;
+}
+.form-item {
+  min-height: 38px;
+  line-height: 38px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.form-input {
+  display: inline-block;
+  width: calc(100% - 170px);
+  height: 26px;
+  line-height: 1;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.form-input:hover {
+  border: 1px solid #00aaff;
+}
+.form-textarea {
+  display: inline-flex;
+  width: calc(100% - 160px);
+  min-height: 26px;
+  max-height: 140px;
+  line-height: 1;
+  overflow: hidden;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  /* resize: vertical; */
+}
+.form-textarea:hover {
+  border: 1px solid #00aaff;
+}
+input {
+  width: 100%;
+  height: 100%;
+  padding: 1px 5px;
+  border: 0px solid #fff;
+  outline: none;
+}
+textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding: 5px;
+  resize: vertical;
 }

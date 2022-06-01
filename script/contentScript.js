@@ -144,6 +144,23 @@ function domainName(url) {
     let array = url.split("/");
     return array[0];
 }
+function getData(result) {
+    if (result && result[CURRENT_URL]) {
+        operation = result[CURRENT_URL]
+        console.log(operation);
+        if (operation.implement) {
+            shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
+            shieldAppoint(operation.shieldAppointClsaaName)
+        } else {
+            cancelInterval('implement')
+        }
+        if (operation.pure) {
+            pure(operation.webTitle, operation.icon)
+        } else {
+            cancelInterval('pure')
+        }
+    }
+}
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request && request.operation) {
         //执行屏蔽函数
@@ -173,25 +190,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         tabId = request.activeInfo.tabId
         sendResponse('----执行页面激活操作----'); // 回调回去
     }
+    if (request && request.event) {
+        init()
+    }
 
 });
 chrome.storage.local.get([CURRENT_URL], function (result) {
     console.log('----执行上次设置---- ');
-    if (result && result[CURRENT_URL]) {
-        operation = result[CURRENT_URL]
-        console.log(operation);
-        if (operation.implement) {
-            shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
-            shieldAppoint(operation.shieldAppointClsaaName)
-        } else {
-            cancelInterval('implement')
-        }
-        if (operation.pure) {
-            pure(operation.webTitle, operation.icon)
-        } else {
-            cancelInterval('pure')
-        }
-    }
+    getData(result)
 })
 /**
  * @todo 快捷键监听
@@ -247,8 +253,13 @@ $(document).keydown(function (event) {
             // delete 关闭当前页面
             window.close()
             break;
+        case 220:
+        case '220':
+            // | \ 、
+            init()
+            break;
         default:
-            console.log("Key: " + event.keyCode);
+            console.log(event.keyCode)
             break;
     }
 });

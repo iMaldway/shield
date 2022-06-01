@@ -31,7 +31,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 pure.addClass('el-btn-primary')
                 pure.removeClass('el-btn-success')
             }
-            sendMessage(tabId, operation);
+            sendMessage(tabId, { operation });
         } else {
             let obj = {};
             /**
@@ -86,7 +86,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         obj[currentURL] = operation;
         chrome.storage.local.set(obj, function () {
             console.log("设置对象 ", operation);
-            sendMessage(tabId, operation);
+            sendMessage(tabId, { operation });
         });
     });
 
@@ -108,12 +108,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         obj[currentURL] = operation;
         chrome.storage.local.set(obj, function () {
             console.log("设置对象 ", operation);
-            sendMessage(tabId, operation);
+            sendMessage(tabId, { operation });
         });
     })
+    // 绑定手动选择
+    $("#manualSelection").on("click", function (ev) {
+        sendMessage(tabId, { event: 'manual' });
+    });
 });
 function sendMessage(id, data, cbk) {
-    chrome.tabs.sendMessage(id, { operation: data }, function (response) {
+    chrome.tabs.sendMessage(id, data, function (response) {
         if (cbk) {
             cbk(response);
         }
