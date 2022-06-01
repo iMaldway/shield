@@ -15,6 +15,8 @@ let operation = {
     shieldAppointClsaaName: "",
     webTitle: PUBLIC_TITLE,
     icon: PUBLIC_ICO,
+    formKey: '',
+    toKey: '',
     implement: false,
     pure: false
 };

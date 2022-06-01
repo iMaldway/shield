@@ -1,7 +1,7 @@
 .app {
   width: 420px;
   height: auto;
-  min-height: 400px;
+  min-height: 560px;
   padding: 10px;
   border-radius: 5px;
 }
@@ -87,6 +87,12 @@
   text-align: right;
   display: inline-block;
   padding-right: 10px;
+}
+.form-interval {
+  width: auto;
+  display: inline-block;
+  text-align: center;
+  min-width: 60px;
 }
 .form-item {
   min-height: 38px;

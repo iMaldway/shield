@@ -48,7 +48,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         $("#shieldKeyClsaaName").val(operation.shieldKeyClsaaName);
         $("#shieldKey").val(operation.shieldKey);
         $("#shieldAppointClsaaName").val(operation.shieldAppointClsaaName);
-
+        // 替换内容
+        $("#formKey").val(operation.formKey);
+        $("#toKey").val(operation.toKey);
+        // 网站标题以及网站ico
         $("#webTitle").val(operation.webTitle);
         $("#icon").val(operation.icon);
     });
@@ -59,6 +62,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         operation.shieldKeyClsaaName = $("#shieldKeyClsaaName").val();
         operation.shieldKey = $("#shieldKey").val();
         operation.shieldAppointClsaaName = $("#shieldAppointClsaaName").val();
+        // 替换内容
+        operation.formKey = $("#formKey").val();
+        operation.toKey = $("#toKey").val();
+        // 网站标题及ico
         operation.webTitle = $("#webTitle").val();
         operation.icon = $("#icon").val();
         let obj = {};

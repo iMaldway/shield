@@ -10,6 +10,9 @@ let shieldKeyInterval;
 let shieldAppointInterval;
 // 纯净模式
 let pureInterval;
+// 替换关键字
+let shieldReplaceInterval;
+const NODE_NAME = ['SPAN', 'LABEL', 'A', 'B', 'P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6']
 /**
  * @todo 关键字屏蔽函数
 */
@@ -72,6 +75,34 @@ function shieldAppoint(classNames) {
     }, TIME)
 }
 /**
+ * @todo 替换关键字
+ */
+function shieldReplace(formKey, toKey) {
+    if (!formKey || formKey === '') {
+        console.log('----没有输入formKey----')
+        return
+    }
+    if (!toKey || toKey === '') {
+        console.log('----没有输入toKey----')
+        return
+    }
+    if (shieldReplaceInterval) {
+        clearInterval(shieldReplaceInterval)
+    }
+    shieldReplaceInterval = setInterval(() => {
+        let children = $('body *')
+        for (let i in children) {
+            let item = children[i]
+            let is = -1;
+            is = item.innerText?.indexOf(formKey)
+            let isNode = NODE_NAME.indexOf(item.nodeName)
+            if (is != -1 && isNode != -1) {
+                item.innerHTML = item.innerHTML?.replace(formKey, toKey)
+            }
+        }
+    }, TIME * 5)
+}
+/**
  * @todo 开启纯净模式
  */
 function pure(webTitle, icon) {
@@ -100,6 +131,9 @@ function cancelInterval(type) {
             if (shieldKeyInterval) {
                 clearInterval(shieldKeyInterval)
             }
+            if (shieldReplaceInterval) {
+                clearInterval(shieldReplaceInterval)
+            }
             break;
         case 'pure':
             if (pureInterval) {
@@ -114,6 +148,9 @@ function cancelInterval(type) {
             }
             if (shieldKeyInterval) {
                 clearInterval(shieldKeyInterval)
+            }
+            if (shieldReplaceInterval) {
+                clearInterval(shieldReplaceInterval)
             }
             if (pureInterval) {
                 clearInterval(pureInterval)
@@ -151,6 +188,7 @@ function getData(result) {
         if (operation.implement) {
             shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
             shieldAppoint(operation.shieldAppointClsaaName)
+            shieldReplace(operation.formKey, operation.toKey)
         } else {
             cancelInterval('implement')
         }
@@ -169,8 +207,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         if (operation.implement) {
             shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
             shieldAppoint(operation.shieldAppointClsaaName)
+            shieldReplace(operation.formKey, operation.toKey)
         } else {
-            if (shieldAppointInterval || shieldKeyInterval) {
+            if (shieldAppointInterval || shieldKeyInterval || shieldReplaceInterval) {
                 location.reload(true)
             }
             cancelInterval('implement')
@@ -236,11 +275,12 @@ $(document).keydown(function (event) {
                 implement.removeClass('el-btn-success')
                 shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
                 shieldAppoint(operation.shieldAppointClsaaName)
+                shieldReplace(operation.formKey, operation.toKey)
             } else {
                 implement.html("执行")
                 implement.addClass('el-btn-success')
                 implement.removeClass('el-btn-danger')
-                if (shieldAppointInterval || shieldKeyInterval) {
+                if (shieldAppointInterval || shieldKeyInterval || shieldReplaceInterval) {
                     location.reload(true)
                 }
                 cancelInterval('implement')

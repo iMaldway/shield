@@ -88,7 +88,12 @@ const mouseoverEvent = (e) => {
 const init = () => {
     // 鼠标指针移出某个元素到另一个元素上时发生
     $(document).on('mouseover', mouseoverEvent)
-    $('#_s-dialog').css('display', 'block')
+    // 初始化弹窗位置至可见位置
+    $('#_s-dialog').css({
+        'top': window.innerHeight * 0.2 + window.scrollY + 'px',
+        'left': '20%',
+        'display': 'block'
+    })
     // 监听鼠标移动事件
     $(document).on('mousemove', (e) => {
         // 拖拽状态
