@@ -56,7 +56,7 @@ const reset = () => {
     $('#_s-div').val('')
     $(document).off('mouseover')
     $(document).off('mousemove')
-    $('a').off('click')
+    $('a,button,input').off('click')
     clearTimeout(timeout)
     isTimeout = false;
     dragging = false;
@@ -96,7 +96,7 @@ const init = () => {
         'display': 'block'
     })
     // 取消默认事件，阻止事件冒泡
-    $('a').on('click', (e) => {
+    $('a,button,input').on('click', (e) => {
         const target = $(e.target);
         const isShield = target.data('shield')
         if (!isShield) {
