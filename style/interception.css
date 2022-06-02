@@ -94,6 +94,7 @@
   box-sizing: border-box;
   border: 1px solid #999;
   background-color: rgba(103, 179, 255, 0.4);
+  z-index: 999;
 }
 ._s-form {
   width: 100%;

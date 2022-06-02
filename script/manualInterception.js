@@ -56,6 +56,7 @@ const reset = () => {
     $('#_s-div').val('')
     $(document).off('mouseover')
     $(document).off('mousemove')
+    $('a').off('click')
     clearTimeout(timeout)
     isTimeout = false;
     dragging = false;
@@ -93,6 +94,15 @@ const init = () => {
         'top': window.innerHeight * 0.2 + window.scrollY + 'px',
         'left': '20%',
         'display': 'block'
+    })
+    // 取消默认事件，阻止事件冒泡
+    $('a').on('click', (e) => {
+        const target = $(e.target);
+        const isShield = target.data('shield')
+        if (!isShield) {
+            e.preventDefault()
+            return false
+        }
     })
     // 监听鼠标移动事件
     $(document).on('mousemove', (e) => {

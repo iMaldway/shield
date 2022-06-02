@@ -13,6 +13,7 @@ let pureInterval;
 // 替换关键字
 let shieldReplaceInterval;
 const NODE_NAME = ['SPAN', 'LABEL', 'A', 'B', 'P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6']
+const nodeName = ['span', 'label', 'a', 'b', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 /**
  * @todo 关键字屏蔽函数
 */
@@ -39,7 +40,7 @@ function shieldKey(className, keys) {
             const innerText = item.innerText;
             for (let m = 0; m < arr.length; m++) {
                 let key = arr[m]
-                if (innerText.indexOf(key) !== -1) {
+                if (innerText.indexOf(key) !== -1 && item.style.display !== 'none') {
                     item.style.display = 'none'
                     break;
                 }
@@ -69,7 +70,9 @@ function shieldAppoint(classNames) {
             let appointArr = document.getElementsByClassName(name);
             for (let i = 0; i < appointArr.length; i++) {
                 let item = appointArr[i]
-                item.style.display = 'none'
+                if (item.style.display !== 'none') {
+                    item.style.display = 'none'
+                }
             }
         }
     }, TIME)
@@ -90,17 +93,16 @@ function shieldReplace(formKey, toKey) {
         clearInterval(shieldReplaceInterval)
     }
     shieldReplaceInterval = setInterval(() => {
-        let children = $('body *')
+        let children = $(nodeName.join(','))
         for (let i in children) {
             let item = children[i]
             let is = -1;
             is = item.innerText?.indexOf(formKey)
-            let isNode = NODE_NAME.indexOf(item.nodeName)
-            if (is != -1 && isNode != -1) {
+            if (is != -1) {
                 item.innerHTML = item.innerHTML?.replace(formKey, toKey)
             }
         }
-    }, TIME * 5)
+    }, TIME)
 }
 /**
  * @todo 开启纯净模式
@@ -110,11 +112,17 @@ function pure(webTitle, icon) {
         clearInterval(pureInterval)
     }
     pureInterval = setInterval(() => {
-        $('title').html(webTitle || PUBLIC_TITLE)
-        $("link[rel*='icon']").attr('href', icon || PUBLIC_ICO)
-        $("link[rel*='icon']").attr('rel', 'shortcut icon')
-        $("link[rel*='icon']").removeAttr('sizes').removeAttr('type').removeAttr('crossorigin')
-        $("link[rel*='search']").remove()
+        let title = $('title').html()
+        if (title !== webTitle && title !== PUBLIC_TITLE) {
+            $('title').html(webTitle || PUBLIC_TITLE)
+        }
+        let iconHref = $("link[rel*='icon']").attr('href')
+        if (iconHref !== icon && iconHref !== PUBLIC_ICO) {
+            $("link[rel*='icon']").attr('href', icon || PUBLIC_ICO)
+            $("link[rel*='icon']").attr('rel', 'shortcut icon')
+            $("link[rel*='icon']").removeAttr('sizes').removeAttr('type').removeAttr('crossorigin')
+            $("link[rel*='search']").remove()
+        }
     }, TIME);
     // 动态执行CSS文件
     sendMessage({ insertCSS: 'insert' })
