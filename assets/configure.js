@@ -8,6 +8,8 @@ let PUBLIC_TITLE = "protected web content"
  * @param icon{String} 网站的图标,base64格式，10kb以内;不填默认;
  * @param implement{Boolean} 是否开启执行;false--没有开启，true--开启
  * @param pure{Boolean} 是否开启纯净模式;false--没有开启，true--开启
+ * @param formKey{String} 目标关键字
+ * @param toKey{String} 替换为的关键字
  */
 let operation = {
     shieldKeyClsaaName: "",
