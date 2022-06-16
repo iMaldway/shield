@@ -78,6 +78,16 @@
   border-color: #ff7676;
   background-color: #ff7676;
 }
+._s-btn-success {
+  color: #fff;
+  border-color: #67c23a;
+  background-color: #67c23a;
+  outline: none;
+}
+._s-btn-success:hover {
+  border-color: #85ce61;
+  background-color: #85ce61;
+}
 ._s-hover {
   position: relative;
   overflow: hidden;

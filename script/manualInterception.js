@@ -18,14 +18,19 @@ const INTERCEPT = `
         <div class="_s-form-item" data-shield="true">
             <label class="_s-form-label" data-shield="true">样式类</label>
             <div  class="_s-form-textarea" data-shield="true">
-                <textarea  data-shield="1" id="_s-className" style="height: 140px;" class="_s-textarea" maxlength="200"></textarea>
+                <textarea  data-shield="1" id="_s-className" style="height: 100px;" class="_s-textarea" maxlength="200"></textarea>
             </div>
         </div>
         <div class="_s-form-item" data-shield="true">
             <label class="_s-form-label" data-shield="true">元素内容</label>
             <div  class="_s-form-textarea" data-shield="true">
-                <textarea disabled data-shield="true" id="_s-key" style="height: 140px;"  class="_s-textarea" maxlength="200"></textarea>
+                <textarea disabled data-shield="true" id="_s-key" style="height: 100px;"  class="_s-textarea" maxlength="200"></textarea>
             </div>
+        </div>
+        <div class="_s-form-item" data-shield="true">
+            <label class="_s-form-label" data-shield="true">调整选取</label>
+            <span id="_s-superior" data-shield="true" class="_s-button _s-btn-primary">上一级</span>
+            <span id="_s-subordinate" data-shield="true" class="_s-button _s-btn-success">下一级</span>
         </div>
     </form>
 </section>
@@ -60,6 +65,7 @@ const reset = () => {
     clearTimeout(timeout)
     isTimeout = false;
     dragging = false;
+    seleteEvent = false;
     timeout = null;
     lastHover = null;
 
@@ -70,7 +76,7 @@ const mouseoverEvent = (e) => {
     if (e.target !== body[0] && e.target !== html[0]) {
         const target = $(e.target);
         const isShield = target.data('shield')
-        if (!isShield) {
+        if (!isShield && !seleteEvent) {
             if (lastHover) {
                 lastHover.removeClass('_s-hover ')
                 lastHover = null
@@ -136,10 +142,13 @@ const init = () => {
 let timeout;
 let isTimeout = true;
 let lastHover;
+let beforeHover = [];
 // 是否激活拖拽状态
 let dragging;
 // 鼠标按下时相对于选中元素的位移
 let tLeft, tTop;
+// 是否已选择元素
+let seleteEvent = false;
 // 监听鼠按下事件
 $(document).on('mousedown', (e) => {
     if (e.target == header[0]) {
@@ -160,6 +169,8 @@ $(document).on('mousedown', (e) => {
             $('#_s-className').val(className)
             $('#_s-key').val(text)
             $('#_s-div').val(e.target.nodeName)
+            // 已经选择元素
+            seleteEvent = true
         } else {
             $('#_s-form').css('display', 'none')
             $('#_s-title').css('display', 'block')
@@ -194,3 +205,37 @@ $('#_s-confirm').on('click', (e) => {
 })
 // 取消
 $('#_s-cancel').on('click', (e) => { reset() })
+// 上一级
+$('#_s-superior').on('click', (e) => {
+    if (seleteEvent && lastHover) {
+        // 移除当前元素
+        lastHover.removeClass('_s-hover ')
+        // 替换
+        beforeHover.push(lastHover)
+        lastHover = $(lastHover[0].parentNode)
+        // 添加
+        lastHover.addClass('_s-hover ')
+        let className = lastHover.attr('class');
+        className = className.replace('_s-hover', '')
+        const text = lastHover.text();
+        $('#_s-className').val(className)
+        $('#_s-key').val(text)
+        $('#_s-div').val(lastHover[0].nodeName)
+    }
+})
+// 下一级
+$('#_s-subordinate').on('click', (e) => {
+    if (seleteEvent && beforeHover.length > 0) {
+        // 移除当前元素
+        lastHover.removeClass('_s-hover ')
+        lastHover = beforeHover.pop()
+        // 添加
+        lastHover.addClass('_s-hover ')
+        let className = lastHover.attr('class');
+        className = className.replace('_s-hover', '')
+        const text = lastHover.text();
+        $('#_s-className').val(className)
+        $('#_s-key').val(text)
+        $('#_s-div').val(lastHover[0].nodeName)
+    }
+})

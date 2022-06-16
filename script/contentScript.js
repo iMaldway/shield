@@ -307,7 +307,7 @@ $(document).keydown(function (event) {
             init()
             break;
         default:
-            console.log(event.keyCode)
+            // console.log(event.keyCode)
             break;
     }
 });
