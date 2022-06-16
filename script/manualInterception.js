@@ -185,9 +185,6 @@ $(document).on('mouseup', (e) => {
 
 // 提交
 $('#_s-confirm').on('click', (e) => {
-    $('#_s-className').val()
-    $('#_s-key').val()
-    $('#_s-div').val()
     const data = {
         'label': $('#_s-div').val(),
         'className': $('#_s-className').val(),
