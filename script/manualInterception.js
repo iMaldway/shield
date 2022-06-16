@@ -47,9 +47,20 @@ const header = $('#_s-dialogHeader')
 const dialog = $('#_s-dialog')
 const body = $('body')
 const html = $('html')
+let timeout;
+let isTimeout = true;
+// 当前选中
+let lastHover;
+// 上一步堆栈
+let beforeHover = [];
+// 是否激活拖拽状态
+let dragging;
+// 鼠标按下时相对于选中元素的位移
+let tLeft, tTop;
+// 是否已选择元素
+let seleteEvent = false;
 // 重置函数
 const reset = () => {
-    console.log('关闭选择界面')
     if (lastHover) {
         lastHover.removeClass('_s-hover ')
     }
@@ -68,6 +79,7 @@ const reset = () => {
     seleteEvent = false;
     timeout = null;
     lastHover = null;
+    beforeHover = [];
 
 }
 // 鼠标指针移出某个元素到另一个元素上时发生
@@ -139,16 +151,6 @@ const init = () => {
         }
     })
 }
-let timeout;
-let isTimeout = true;
-let lastHover;
-let beforeHover = [];
-// 是否激活拖拽状态
-let dragging;
-// 鼠标按下时相对于选中元素的位移
-let tLeft, tTop;
-// 是否已选择元素
-let seleteEvent = false;
 // 监听鼠按下事件
 $(document).on('mousedown', (e) => {
     if (e.target == header[0]) {
