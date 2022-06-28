@@ -72,7 +72,7 @@ const reset = () => {
     $('#_s-div').val('')
     $(document).off('mouseover')
     $(document).off('mousemove')
-    $('a,button,input').off('click')
+    $('a,button,input,img').off('click')
     clearTimeout(timeout)
     isTimeout = false;
     dragging = false;
@@ -114,7 +114,7 @@ const init = () => {
         'display': 'block'
     })
     // 取消默认事件，阻止事件冒泡
-    $('a,button,input').on('click', (e) => {
+    $('a,button,input,img').on('click', (e) => {
         const target = $(e.target);
         const isShield = target.data('shield')
         if (!isShield) {
