@@ -21,7 +21,8 @@ function TAG(targetId, character, separator) {
   }
   this.remove = function (value) {
     for (let i = 0; i < this.list.length; i++) {
-      const item = this.list[i]
+      let item = this.list[i]
+      item = item.trim()
       if (value === item) {
         this.list.splice(i, 1)
         break
@@ -57,7 +58,7 @@ function TAG(targetId, character, separator) {
     separator = separator ? separator : '/'
     this.list = character.split(separator)
     this.list = this.list.map(function (value) {
-      return value.replace(' ', '')
+      return value.trim()
     })
     let last = this.list[this.list.length - 1]
     if (last === '') {

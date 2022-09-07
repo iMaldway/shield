@@ -17,14 +17,14 @@ const INTERCEPT = `
         </div>
         <div class="_s-form-item" data-shield="true">
             <label class="_s-form-label" data-shield="true">ID</label>
-            <div  class="_s-form-textarea" data-shield="true">
-                <textarea  data-shield="1" id="_s-id" style="height: 26px;" class="_s-textarea" maxlength="200"></textarea>
+            <div disabled class="_s-form-input" data-shield="true">
+                <input id="_s-id"  disabled data-shield="true" class="_s-input" />
             </div>
         </div>
         <div class="_s-form-item" data-shield="true">
             <label class="_s-form-label" data-shield="true">样式类</label>
             <div  class="_s-form-textarea" data-shield="true">
-                <textarea  data-shield="1" id="_s-className" style="height: 100px;" class="_s-textarea" maxlength="200"></textarea>
+                <textarea  data-shield="true" id="_s-className" style="height: 100px;" class="_s-textarea" maxlength="200"></textarea>
             </div>
         </div>
         <div class="_s-form-item" data-shield="true">
@@ -37,6 +37,13 @@ const INTERCEPT = `
             <label class="_s-form-label" data-shield="true">调整选取</label>
             <span id="_s-superior" data-shield="true" class="_s-button _s-btn-primary">上一级</span>
             <span id="_s-subordinate" data-shield="true" class="_s-button _s-btn-success">下一级</span>
+        </div>
+        <div class="_s-form-item" data-shield="true">
+            <label class="_s-form-label" data-shield="true"></label>
+            <div class="_s-form-info" data-shield="true">
+                ID存在值时候优先取ID，样式类只能存在一种。
+                当只有一个ID和只有一个样式类时，可同时生效。
+            </div>
         </div>
     </form>
 </section>
@@ -193,21 +200,42 @@ $(document).on('mouseup', e => {
 
 // 提交
 $('#_s-confirm').on('click', e => {
+  const is = {
+    msg: '',
+    result: true
+  }
   const data = {
     label: $('#_s-div').val(),
     id: $('#_s-id').val(),
     className: $('#_s-className').val(),
     text: $('#_s-key').val()
   }
-  operation.shieldAppointClsaaName = operation.shieldAppointClsaaName + '/' + data.className
-  let obj = {}
-  obj[CURRENT_URL] = operation
-  chrome.storage.local.set(obj, function () {
-    chrome.storage.local.get([CURRENT_URL], function (result) {
-      getData(result)
+  /**
+   * id的优先级最高
+   */
+  if (data.id && data.id !== '') {
+    operation.shieldId = operation.shieldId + '/' + data.id
+  } else if (data.className && data.className !== '') {
+    let list = data.className.split(' ')
+    if (list.length <= 1) {
+      operation.shieldAppointClsaaName = operation.shieldAppointClsaaName + '/' + data.className
+    } else {
+      is.result = false
+      is.msg = '请精简样式类，只能存在一个！'
+    }
+  }
+  if (is.result) {
+    let obj = {}
+    obj[CURRENT_URL] = operation
+    chrome.storage.local.set(obj, function () {
+      chrome.storage.local.get([CURRENT_URL], function (result) {
+        getData(result)
+      })
     })
-  })
-  reset()
+    reset()
+  } else {
+    alert(is.msg)
+  }
 })
 // 取消
 $('#_s-cancel').on('click', e => {

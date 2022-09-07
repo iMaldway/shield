@@ -25,6 +25,7 @@
           <option value="4">内容替换</option>
           <option value="5">网站标题</option>
           <option value="6">网站icon</option>
+          <option value="shortcut">快捷键</option>
         </select>
       </div>
     </div>
@@ -76,6 +77,35 @@
       <label class="form-label">网站icon：</label>
       <div class="form-textarea">
         <textarea placeholder="自定义网站icon，base64格式，10kb以内;不填默认;" id="icon" maxlength="1024"></textarea>
+      </div>
+    </div>
+    <div class="form-item" id="form-item-shortcut" style="display: none;">
+      <label class="form-label">快捷键：</label>
+      <div class="form-info">
+        <table>
+          <thead>
+            <th>按键</th>
+            <th>说明</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Esc</td>
+              <td>快捷开启/关闭纯净模式</td>
+            </tr>
+            <tr>
+              <td>~</td>
+              <td>快捷开启/关闭屏蔽相关功能</td>
+            </tr>
+            <tr>
+              <td>delete</td>
+              <td>关闭当前网页</td>
+            </tr>
+            <tr>
+              <td>|</td>
+              <td>打开手动屏蔽选择器</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </form>

@@ -127,6 +127,22 @@
   border-radius: 4px;
   /* resize: vertical; */
 }
+.form-info {
+  display: inline-flex;
+  width: calc(100% - 160px);
+  min-height: 100px;
+  max-height: 200px;
+  line-height: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  flex-wrap: wrap;
+}
+.form-info table {
+  width: 100%;
+  font-size: 14px;
+  width: 100%;
+  text-align: left;
+}
 .form-tag {
   height: auto;
   overflow-y: auto;
@@ -145,6 +161,9 @@
   border: 1px solid #dadada;
   border-radius: 4px;
   overflow: hidden;
+}
+.form-select:hover {
+  border: 1px solid #00aaff;
 }
 .form-textarea:hover {
   border: 1px solid #00aaff;

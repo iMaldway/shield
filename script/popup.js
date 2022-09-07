@@ -70,6 +70,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       let id = 'form-item-' + i
       $('#' + id).hide()
     }
+    $('#form-item-shortcut').hide()
     $('#form-item-' + nowID).show()
   })
 

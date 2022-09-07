@@ -93,7 +93,7 @@
   overflow: hidden;
 }
 ._s-hover::before {
-  content: " ";
+  content: ' ';
   display: block;
   box-sizing: border-box;
   position: absolute;
@@ -164,4 +164,15 @@
   outline: none;
   padding: 5px;
   resize: vertical;
+}
+._s-form-info {
+  color: #666;
+  font-size: 14px;
+  display: inline-flex;
+  width: calc(100% - 160px);
+  min-height: 26px;
+  max-height: 100px;
+  line-height: 1;
+  overflow: hidden;
+  border-radius: 5px;
 }
