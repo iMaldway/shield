@@ -72,7 +72,7 @@ function shieldAppoint(classNames) {
       let appointArr = document.getElementsByClassName(name)
       for (let i = 0; i < appointArr.length; i++) {
         let item = appointArr[i]
-        if (item.style.display !== 'none') {
+        if (item.style && item.style.display !== 'none') {
           item.style.display = 'none'
         }
       }
@@ -98,7 +98,7 @@ function shieldId(ids) {
     for (let c in arr) {
       const name = arr[c]
       let item = document.getElementById(name)
-      if (item.style.display !== 'none') {
+      if (item.style && item.style.display !== 'none') {
         item.style.display = 'none'
       }
     }

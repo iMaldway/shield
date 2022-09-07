@@ -76,7 +76,6 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 
   // 绑定保存事件
   $('#preservation').on('click', function (e) {
-    console.log(e)
     operation.shieldKeyClsaaName = $('#shieldKeyClsaaName').val()
     operation.shieldKey = shieldKeyTAG.toString()
     operation.shieldId = shieldIdTAG.toString()
