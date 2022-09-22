@@ -1,8 +1,13 @@
 {
   "name": "shield",
   "description": "为开发人员打造的一款网站内容屏蔽插件！",
-  "version": "2.1.3",
+  "version": "2.2.4",
   "manifest_version": 3,
+  "externally_connectable": {
+    "ids": ["pimlgpfbfcnkkedchjnjofinmipbhokh"],
+    "matches": ["https://example.com/*"],
+    "accepts_tls_channel_id": false
+  },
   "background": {
     "service_worker": "background.js"
   },

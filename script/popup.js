@@ -144,8 +144,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 })
 function sendMessage(id, data, cbk) {
   chrome.tabs.sendMessage(id, data, function (response) {
-    if (cbk) {
-      cbk(response)
+    if (!chrome.runtime.lastError) {
+      if (cbk) {
+        cbk(response)
+      }
     }
   })
 }

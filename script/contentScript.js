@@ -72,7 +72,7 @@ function shieldAppoint(classNames) {
       let appointArr = document.getElementsByClassName(name)
       for (let i = 0; i < appointArr.length; i++) {
         let item = appointArr[i]
-        if (item.style && item.style.display !== 'none') {
+        if (item && item.style && item.style.display !== 'none') {
           item.style.display = 'none'
         }
       }
@@ -98,7 +98,7 @@ function shieldId(ids) {
     for (let c in arr) {
       const name = arr[c]
       let item = document.getElementById(name)
-      if (item.style && item.style.display !== 'none') {
+      if (item && item.style && item.style.display !== 'none') {
         item.style.display = 'none'
       }
     }
@@ -202,9 +202,11 @@ function cancelInterval(type) {
 }
 function sendMessage(data, cbk) {
   chrome.runtime.sendMessage(data, function (response) {
-    console.log('收到来自后台的回复：' + response)
-    if (cbk) {
-      cbk(response)
+    if (!chrome.runtime.lastError) {
+      console.log('收到来自后台的回复：' + response)
+      if (cbk) {
+        cbk(response)
+      }
     }
   })
 }
