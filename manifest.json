@@ -1,7 +1,7 @@
 {
   "name": "shield",
   "description": "为开发人员打造的一款网站内容屏蔽插件！",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "manifest_version": 3,
   "externally_connectable": {
     "ids": ["pimlgpfbfcnkkedchjnjofinmipbhokh"],
@@ -26,7 +26,12 @@
   },
   "content_scripts": [
     {
-      "js": ["/utils/jquery-3.6.0.min.js", "/assets/configure.js", "/script/manualInterception.js", "/script/contentScript.js"],
+      "js": [
+        "/utils/jquery-3.6.0.min.js",
+        "/assets/configure.js",
+        "/script/manualInterception.js",
+        "/script/contentScript.js"
+      ],
       "css": ["/style/interception.css"],
       "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_start"
