@@ -180,7 +180,7 @@ $(document).on('mousedown', e => {
       let className = lastHover.attr('class')
       className = className.replace('_s-hover', '')
       const text = lastHover.text()
-      $('#_s-className').val(className)
+      $('#_s-className').val(className.trim())
       $('#_s-id').val(lastHover.attr('id'))
       $('#_s-key').val(text)
       $('#_s-div').val(e.target.nodeName)
@@ -216,9 +216,15 @@ $('#_s-confirm').on('click', e => {
   if (data.id && data.id !== '') {
     operation.shieldId = operation.shieldId + '/' + data.id
   } else if (data.className && data.className !== '') {
+    // 去除两端空格
+    data.className = data.className.trim()
     let list = data.className.split(' ')
     if (list.length <= 1) {
-      operation.shieldAppointClsaaName = operation.shieldAppointClsaaName + '/' + data.className
+      if (operation.shieldAppointClsaaName === '') {
+        operation.shieldAppointClsaaName = data.className
+      } else {
+        operation.shieldAppointClsaaName = operation.shieldAppointClsaaName + '/' + data.className
+      }
     } else {
       is.result = false
       is.msg = '请精简样式类，只能存在一个！'
@@ -254,7 +260,7 @@ $('#_s-superior').on('click', e => {
     let className = lastHover.attr('class')
     className = className.replace('_s-hover', '')
     const text = lastHover.text()
-    $('#_s-className').val(className)
+    $('#_s-className').val(className.trim())
     $('#_s-id').val(lastHover.attr('id'))
     $('#_s-key').val(text)
     $('#_s-div').val(lastHover[0].nodeName)
@@ -271,7 +277,7 @@ $('#_s-subordinate').on('click', e => {
     let className = lastHover.attr('class')
     className = className.replace('_s-hover', '')
     const text = lastHover.text()
-    $('#_s-className').val(className)
+    $('#_s-className').val(className.trim())
     $('#_s-id').val(lastHover.attr('id'))
     $('#_s-key').val(text)
     $('#_s-div').val(lastHover[0].nodeName)
