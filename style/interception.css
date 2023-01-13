@@ -3,6 +3,12 @@ body,
 div {
   filter: none !important;
 }
+div,
+img,
+video,
+a {
+  transition: height 1.5s, opacity 1.5s;
+}
 ._s-dialog * {
   box-sizing: border-box;
 }

@@ -1,6 +1,6 @@
 console.log('----注入脚本----')
 let tabId
-const TIME = 1000
+const TIME = 1600
 const CURRENT_URL = domainName(window.location.href)
 // 配置对象
 // let operation;
@@ -16,6 +16,16 @@ let pureInterval
 let shieldReplaceInterval
 const NODE_NAME = ['SPAN', 'LABEL', 'A', 'B', 'P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6']
 const nodeName = ['span', 'label', 'a', 'b', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+// 屏蔽数量
+let SHIELD_NUMBER = 0
+/**
+ * @todo 屏蔽数量
+ */
+setInterval(() => {
+  if (tabId && SHIELD_NUMBER > 0) {
+    sendMessage({ shieldNumber: SHIELD_NUMBER > 99 ? '99' : SHIELD_NUMBER })
+  }
+}, TIME)
 /**
  * @todo 关键字屏蔽函数
  */
@@ -42,8 +52,17 @@ function shieldKey(className, keys) {
       const innerText = item.innerText
       for (let m = 0; m < arr.length; m++) {
         let key = arr[m]
-        if (innerText.indexOf(key) !== -1 && item.style.display !== 'none') {
-          item.style.display = 'none'
+        if (innerText.indexOf(key) !== -1 && item.style.display !== 'none' && item.style.opacity !== '0') {
+          // item.style.display = 'none'
+          item.style.opacity = '0'
+          item.style.visibility = 'hidden'
+          item.style.width = '0'
+          item.style.height = '0'
+          item.style.overflow = 'hidden'
+          item.style.padding = '0'
+          item.style.margin = '0'
+          item.style.pointerEvents = 'none'
+          SHIELD_NUMBER++
           break
         }
       }
@@ -72,8 +91,17 @@ function shieldAppoint(classNames) {
       let appointArr = document.getElementsByClassName(name)
       for (let i = 0; i < appointArr.length; i++) {
         let item = appointArr[i]
-        if (item && item.style && item.style.display !== 'none') {
-          item.style.display = 'none'
+        if (item && item.style && item.style.display !== 'none' && item.style.opacity !== '0') {
+          // item.style.display = 'none'
+          item.style.opacity = '0'
+          item.style.visibility = 'hidden'
+          item.style.width = '0'
+          item.style.height = '0'
+          item.style.overflow = 'hidden'
+          item.style.padding = '0'
+          item.style.margin = '0'
+          item.style.pointerEvents = 'none'
+          SHIELD_NUMBER++
         }
       }
     }
@@ -98,8 +126,17 @@ function shieldId(ids) {
     for (let c in arr) {
       const name = arr[c]
       let item = document.getElementById(name)
-      if (item && item.style && item.style.display !== 'none') {
-        item.style.display = 'none'
+      if (item && item.style && item.style.display !== 'none' && item.style.opacity !== '0') {
+        // item.style.display = 'none'
+        item.style.opacity = '0'
+        item.style.visibility = 'hidden'
+        item.style.width = '0'
+        item.style.height = '0'
+        item.style.overflow = 'hidden'
+        item.style.padding = '0'
+        item.style.margin = '0'
+        item.style.pointerEvents = 'none'
+        SHIELD_NUMBER++
       }
     }
   }, TIME)
@@ -199,11 +236,14 @@ function cancelInterval(type) {
       sendMessage({ insertCSS: 'remove' })
       break
   }
+  SHIELD_NUMBER = 0
 }
+
 function sendMessage(data, cbk) {
-  chrome.runtime.sendMessage(data, function (response) {
+  chrome.runtime.sendMessage(chrome.runtime.id, data, function (response) {
     if (!chrome.runtime.lastError) {
-      console.log('收到来自后台的回复：' + response)
+      console.log('收到来自后台的回复：' + response.text)
+      tabId = response?.tabId || ''
       if (cbk) {
         cbk(response)
       }

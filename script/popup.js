@@ -13,6 +13,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   const shieldKeyTAG = new TAG('shieldKey')
   // 创建屏蔽ID组件
   const shieldIdTAG = new TAG('shieldId')
+
   // 是否存在过数据
   chrome.storage.local.get([currentURL], function (result) {
     if (result && result[currentURL]) {

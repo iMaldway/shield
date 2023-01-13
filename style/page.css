@@ -19,7 +19,13 @@ body *::before {
 }
 img,
 video {
-  display: none !important;
+  /* display: none !important; */
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  opacity: 0;
 }
 svg,
 g,
@@ -28,7 +34,7 @@ path {
   fill: #999 !important;
 }
 /**csdn*/
-button[id*="search"] {
+button[id*='search'] {
   border: 1px solid #ccccd8 !important;
   box-sizing: border-box !important;
   overflow: hidden !important;

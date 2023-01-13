@@ -1,7 +1,7 @@
 {
   "name": "shield",
   "description": "为开发人员打造的一款网站内容屏蔽插件！",
-  "version": "2.2.6",
+  "version": "2.3.5",
   "manifest_version": 3,
   "externally_connectable": {
     "ids": ["pimlgpfbfcnkkedchjnjofinmipbhokh"],
