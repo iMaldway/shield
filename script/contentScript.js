@@ -171,22 +171,34 @@ function shieldReplace(formKey, toKey) {
 /**
  * @todo 开启纯净模式
  */
-function pure(webTitle, icon) {
+function pure(webTitle, icon, pureInfo) {
+  if (!pureInfo) {
+    pureInfo = {
+      backgroundColor: '#ffffff',
+      isTitle: 'true',
+      isIcon: 'true'
+    }
+  }
   if (pureInterval) {
     clearInterval(pureInterval)
   }
   pureInterval = setInterval(() => {
-    let title = $('title').html()
-    if (title !== webTitle && title !== PUBLIC_TITLE) {
-      $('title').html(webTitle || PUBLIC_TITLE)
+    if (pureInfo.isTitle === 'true') {
+      let title = $('title').html()
+      if (title !== webTitle && title !== PUBLIC_TITLE) {
+        $('title').html(webTitle || PUBLIC_TITLE)
+      }
     }
-    let iconHref = $("link[rel*='icon']").attr('href')
-    if (iconHref !== icon && iconHref !== PUBLIC_ICO) {
-      $("link[rel*='icon']").attr('href', icon || PUBLIC_ICO)
-      $("link[rel*='icon']").attr('rel', 'shortcut icon')
-      $("link[rel*='icon']").removeAttr('sizes').removeAttr('type').removeAttr('crossorigin')
-      $("link[rel*='search']").remove()
+    if (pureInfo.isIcon === 'true') {
+      let iconHref = $("link[rel*='icon']").attr('href')
+      if (iconHref !== icon && iconHref !== PUBLIC_ICO) {
+        $("link[rel*='icon']").attr('href', icon || PUBLIC_ICO)
+        $("link[rel*='icon']").attr('rel', 'shortcut icon')
+        $("link[rel*='icon']").removeAttr('sizes').removeAttr('type').removeAttr('crossorigin')
+        $("link[rel*='search']").remove()
+      }
     }
+    $('html').css('--shield-bg-color', pureInfo.backgroundColor || '#ffffff')
   }, TIME)
   // 动态执行CSS文件
   sendMessage({ insertCSS: 'insert' })
@@ -277,7 +289,7 @@ function getData(result) {
       cancelInterval('implement')
     }
     if (operation.pure) {
-      pure(operation.webTitle, operation.icon)
+      pure(operation.webTitle, operation.icon, operation.pureInfo)
     } else {
       cancelInterval('pure')
     }
@@ -300,7 +312,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       cancelInterval('implement')
     }
     if (operation.pure) {
-      pure(operation.webTitle, operation.icon)
+      pure(operation.webTitle, operation.icon, operation.pureInfo)
     } else {
       if (pureInterval) {
         location.reload(true)
@@ -337,7 +349,7 @@ $(document).keydown(function (event) {
         pure_.html('已开启纯净模式')
         pure_.addClass('el-btn-success')
         pure_.removeClass('el-btn-primary')
-        pure(operation.webTitle, operation.icon)
+        pure(operation.webTitle, operation.icon, operation.pureInfo)
       } else {
         pure_.html('纯净模式')
         pure_.addClass('el-btn-primary')

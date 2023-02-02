@@ -62,12 +62,34 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     // 网站标题以及网站ico
     $('#webTitle').val(operation.webTitle)
     $('#icon').val(operation.icon)
+    // 纯净模式相关
+    if (operation.pureInfo) {
+      if (operation.pureInfo.backgroundColor) {
+        $('#pureInfoBackgroundColor').val(operation.pureInfo.backgroundColor)
+      } else {
+        $('#pureInfoBackgroundColor').val('#ffffff')
+      }
+      if (operation.pureInfo.isTitle === 'true') {
+        $('#pureInfoIsTitleTrue').attr('checked', 'checked')
+      } else {
+        $('#pureInfoIsTitleFalse').attr('checked', 'checked')
+      }
+      if (operation.pureInfo.isIcon === 'true') {
+        $('#pureInfoIsIconTrue').attr('checked', 'checked')
+      } else {
+        $('#pureInfoIsIconFalse').attr('checked', 'checked')
+      }
+    } else {
+      $('#pureInfoBackgroundColor').val('#ffffff')
+      $('#pureInfoIsIconTrue').attr('checked', 'checked')
+      $('#pureInfoIsTitleTrue').attr('checked', 'checked')
+    }
   })
 
   // 绑定类型选择事件
   $('#shieldType').on('change', function (e) {
     const nowID = $('#shieldType').val()
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 7; i++) {
       let id = 'form-item-' + i
       $('#' + id).hide()
     }
@@ -87,6 +109,19 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     // 网站标题及ico
     operation.webTitle = $('#webTitle').val()
     operation.icon = $('#icon').val()
+    // 纯净模式相关
+    if (operation.pureInfo) {
+      operation.pureInfo.backgroundColor = $('#pureInfoBackgroundColor').val()
+      operation.pureInfo.isTitle = $("input[name='isTitle']:checked").val()
+      operation.pureInfo.isIcon = $("input[name='isIcon']:checked").val()
+    } else {
+      operation.pureInfo = {
+        backgroundColor: '#ffffff',
+        isTitle: true,
+        isIcon: true
+      }
+    }
+
     let obj = {}
     obj[currentURL] = operation
     chrome.storage.local.set(obj, function () {
@@ -129,7 +164,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       pure.html('纯净模式')
       pure.addClass('el-btn-primary')
       pure.removeClass('el-btn-success')
-      location.reload(true)
+      // location.reload(true)
     }
     let obj = {}
     obj[currentURL] = operation

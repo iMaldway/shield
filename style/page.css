@@ -1,21 +1,21 @@
 html,
 body {
   background-image: none !important;
-  background-color: #fffbe8 !important;
+  background-color: var(--shield-bg-color) !important;
 }
 body * {
   background-image: none !important;
-  background-color: #fffbe8 !important;
+  background-color: var(--shield-bg-color) !important;
   color: #4d4d4d !important;
   border-color: #ccccd8 !important;
 }
 body *::after {
-  background: #fffbe8 !important;
-  background-color: #fffbe8 !important;
+  background: var(--shield-bg-color) !important;
+  background-color: var(--shield-bg-color) !important;
 }
 body *::before {
-  background: #fffbe8 !important;
-  background-color: #fffbe8 !important;
+  background: var(--shield-bg-color) !important;
+  background-color: var(--shield-bg-color) !important;
 }
 img,
 video {

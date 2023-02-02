@@ -25,6 +25,7 @@
           <option value="4">内容替换</option>
           <option value="5">网站标题</option>
           <option value="6">网站icon</option>
+          <option value="7">纯净模式设置</option>
           <option value="shortcut">快捷键</option>
         </select>
       </div>
@@ -70,12 +71,36 @@
       <div class="form-input">
         <input placeholder="自定义网站标题" id="webTitle" maxlength="50"></input>
       </div>
+      <p class="form-remarks">仅在纯净模式下生效</p>
     </div>
     <div class="form-item" id="form-item-6" style="display: none;">
       <label class="form-label">网站icon：</label>
       <div class="form-textarea">
         <textarea placeholder="自定义网站icon，base64格式，10kb以内;不填默认;" id="icon" maxlength="1024"></textarea>
       </div>
+      <p class="form-remarks">仅在纯净模式下生效</p>
+    </div>
+    <div class="form-item" id="form-item-7" style="display: none;">
+      <div class="form-item">
+        <label class="form-label" style="width: 118px;">背景颜色设置：</label>
+        <div class="form-input"><input placeholder="纯净模式网页背景色" id="pureInfoBackgroundColor" maxlength="100"></input>
+        </div>
+      </div>
+      <div class="form-item">
+        <label class="form-label">是否替换网站标题：</label>
+        <div class="form-radio">
+          <input  class="form-radio-item" type="radio" id="pureInfoIsTitleTrue" name="isTitle" value="true" >替换
+          <input  class="form-radio-item" type="radio" id="pureInfoIsTitleFalse" name="isTitle" value="false" >不替换
+        </div>
+      </div>
+      <div class="form-item">
+        <label class="form-label">是否替换网站icon：</label>
+        <div class="form-radio">
+          <input  class="form-radio-item" type="radio" id="pureInfoIsIconTrue" name="isIcon" value="true" >替换
+          <input  class="form-radio-item" type="radio" id="pureInfoIsIconFalse" name="isIcon" value="false" >不替换
+        </div>
+      </div>
+      <p class="form-remarks">仅在纯净模式下生效</p>
     </div>
     <div class="form-item" id="form-item-shortcut" style="display: none;">
       <label class="form-label">快捷键：</label>

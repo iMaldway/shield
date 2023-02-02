@@ -21,5 +21,10 @@ let operation = {
   formKey: '',
   toKey: '',
   implement: false,
-  pure: false
+  pure: false,
+  pureInfo: {
+    backgroundColor: '#ffffff',
+    isTitle: true,
+    isIcon: true
+  }
 }
