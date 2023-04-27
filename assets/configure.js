@@ -20,7 +20,7 @@ let operation = {
   icon: PUBLIC_ICO,
   formKey: '',
   toKey: '',
-  implement: false,
+  implement: true,
   pure: false,
   pureInfo: {
     backgroundColor: '#ffffff',
