@@ -32,7 +32,6 @@
         "/script/manualInterception.js",
         "/script/contentScript.js"
       ],
-      "css": ["/style/interception.css"],
       "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_start"
     }

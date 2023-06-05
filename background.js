@@ -8,7 +8,21 @@ chrome.runtime.onMessageExternal.addListener(function (request, sender, sendResp
   handle(request, sender, sendResponse)
 })
 function handle(request, sender, sendResponse) {
-  // 动态注入css
+  // 动态注入手动选择框css
+  if (request && request.dialogCSS === 'insert') {
+    chrome.scripting.insertCSS({
+      origin: 'USER',
+      target: { tabId: sender.tab.id, allFrames: true },
+      files: ['style/interception.css']
+    })
+  } else if(request && request.dialogCSS === 'remove') {
+    chrome.scripting.removeCSS({
+      origin: 'USER',
+      target: { tabId: sender.tab.id, allFrames: true },
+      files: ['style/interception.css']
+    })
+  }
+  // 动态注入纯净模式css
   if (request && request.insertCSS) {
     if (request.insertCSS === 'insert') {
       chrome.scripting.insertCSS({
@@ -16,7 +30,7 @@ function handle(request, sender, sendResponse) {
         target: { tabId: sender.tab.id, allFrames: true },
         files: ['style/page.css']
       })
-    } else {
+    } else if(request && request.insertCSS === 'remove') {
       chrome.scripting.removeCSS({
         origin: 'USER',
         target: { tabId: sender.tab.id, allFrames: true },

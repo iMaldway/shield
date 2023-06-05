@@ -256,9 +256,10 @@ function sendMessage(data, cbk) {
     if (!chrome.runtime.lastError) {
       console.log('收到来自后台的回复：' + response.text)
       tabId = response?.tabId || ''
-      if (cbk) {
-        cbk(response)
-      }
+    }
+    // 不管执行是否成功都进行回调函数处理
+    if (cbk) {
+      cbk(response)
     }
   })
 }
@@ -279,7 +280,6 @@ function domainName(url) {
 function getData(result) {
   if (result && result[CURRENT_URL]) {
     operation = result[CURRENT_URL]
-    console.log(operation)
     if (operation.implement) {
       shieldKey(operation.shieldKeyClsaaName, operation.shieldKey)
       shieldAppoint(operation.shieldAppointClsaaName)
@@ -322,7 +322,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     sendResponse('----执行屏蔽操作----') // 回调回去
   }
   if (request && request.activeInfo) {
-    console.log(request.activeInfo)
     tabId = request.activeInfo.tabId
     sendResponse('----执行页面激活操作----') // 回调回去
   }

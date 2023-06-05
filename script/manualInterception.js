@@ -53,11 +53,11 @@ const INTERCEPT = `
 </footer>
 </div>
 `
+// 挂载html
 const $dialog = $(INTERCEPT)
 $('html').append($dialog)
-// 可以拖拽的元素
-const header = $('#_s-dialogHeader')
-const dialog = $('#_s-dialog')
+let header
+let dialog
 const body = $('body')
 const html = $('html')
 let timeout
@@ -74,6 +74,7 @@ let tLeft, tTop
 let seleteEvent = false
 // 重置函数
 const reset = () => {
+  sendMessage({ dialogCSS: 'remove' })
   if (lastHover) {
     lastHover.removeClass('_s-hover ')
   }
@@ -118,16 +119,23 @@ const mouseoverEvent = e => {
   isTimeout = true
 }
 const init = () => {
+  // 动态执行CSS文件
+  sendMessage({ dialogCSS: 'insert' },function(){
+    // 初始化弹窗位置至可见位置
+    $('#_s-dialog').css({
+      top: window.innerHeight * 0.2 + window.scrollY + 'px',
+      left: '20%',
+      display: 'block'
+    })
+  })
+  // 可以拖拽的元素
+  header = $('#_s-dialogHeader')
+  dialog = $('#_s-dialog')
   // 鼠标指针移出某个元素到另一个元素上时发生
   $(document).on('mouseover', mouseoverEvent)
-  // 初始化弹窗位置至可见位置
-  $('#_s-dialog').css({
-    top: window.innerHeight * 0.2 + window.scrollY + 'px',
-    left: '20%',
-    display: 'block'
-  })
   // 取消默认事件，阻止事件冒泡
-  $('a,button,input,img').on('click', e => {
+  $('a,button,input,img,iframe').on('click', e => {
+    debugger
     const target = $(e.target)
     const isShield = target.data('shield')
     if (!isShield) {
@@ -165,7 +173,7 @@ const init = () => {
 }
 // 监听鼠按下事件
 $(document).on('mousedown', e => {
-  if (e.target == header[0]) {
+  if (header && e.target == header[0]) {
     // 激活拖拽状态
     dragging = true
     // 鼠标按下时和选中元素的坐标偏移:x坐标
