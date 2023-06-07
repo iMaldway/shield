@@ -36,7 +36,7 @@ iframe,a,img,image{
   color: #333;
   font-weight: 600;
   cursor: move;
-  padding: 12px 14px;
+  padding: 12px 14px !important;
   background-color: #409eff;
   color: #fff;
   border-bottom: 1px solid #ebeef5;
@@ -44,7 +44,7 @@ iframe,a,img,image{
 }
 ._s-dialog_body {
   height: calc(100% - 46px - 60px);
-  padding: 14px;
+  padding: 14px !important;
   overflow-y: auto;
   background-color: #fefefe;
 }
@@ -52,7 +52,7 @@ iframe,a,img,image{
   text-align: right;
   border-top: 1px solid #ebeef5;
   height: 60px;
-  padding: 12px 14px;
+  padding: 12px 14px !important;
 }
 ._s-button {
   margin-left: 5px;
@@ -72,7 +72,7 @@ iframe,a,img,image{
   user-select: none;
   vertical-align: middle;
   -webkit-appearance: none;
-  padding: 4px 15px;
+  padding: 4px 15px !important;
   border-radius: 5px;
 }
 ._s-btn-primary {
@@ -138,7 +138,7 @@ iframe,a,img,image{
   height: 100%;
   text-align: right;
   display: inline-block;
-  padding-right: 10px;
+  padding-right: 10px !important;
 }
 ._s-form-item {
   min-height: 38px;
@@ -160,7 +160,7 @@ iframe,a,img,image{
 ._s-input {
   width: 100%;
   height: 100%;
-  padding: 1px 5px;
+  padding: 1px 5px !important;
   border: 0px solid #fff;
   outline: none;
 }
@@ -182,7 +182,7 @@ iframe,a,img,image{
   height: 100%;
   border: none;
   outline: none;
-  padding: 5px;
+  padding: 5px !important;
   resize: vertical;
 }
 ._s-form-info {
