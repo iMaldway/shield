@@ -8,8 +8,13 @@ img,
 image,
 video,
 a {
-  height: auto !important;
   transition: height 1.5s, opacity 1.5s;
+}
+div,
+img,
+image,
+video, {
+  height: auto !important;
 }
 iframe,a,img,image{
   pointer-events:none
