@@ -135,7 +135,6 @@ const init = () => {
   $(document).on('mouseover', mouseoverEvent)
   // 取消默认事件，阻止事件冒泡
   $('a,button,input,img,iframe').on('click', e => {
-    debugger
     const target = $(e.target)
     const isShield = target.data('shield')
     if (!isShield) {
