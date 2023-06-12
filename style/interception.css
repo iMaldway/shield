@@ -8,6 +8,7 @@ img,
 image,
 video,
 a {
+  height: auto !important;
   transition: height 1.5s, opacity 1.5s;
 }
 iframe,a,img,image{
