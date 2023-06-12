@@ -13,7 +13,7 @@ a {
 div,
 img,
 image,
-video, {
+video {
   height: auto !important;
 }
 iframe,a,img,image{
