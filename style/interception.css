@@ -29,7 +29,7 @@ iframe,a,img,image{
   position: absolute;
   top: 20%;
   left: 20%;
-  z-index: 99999;
+  z-index: 99999999999;
 }
 ._s-dialog_header {
   height: 46px;
@@ -125,7 +125,7 @@ iframe,a,img,image{
   border: 1px solid #999;
   background-color: rgba(103, 179, 255, 0.4);
   pointer-events:none;
-  z-index: 9999;
+  z-index: 9999999999;
 }
 ._s-form {
   width: 100%;
