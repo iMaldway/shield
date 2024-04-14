@@ -10,14 +10,20 @@ video,
 a {
   transition: height 1.5s, opacity 1.5s;
 }
+/**
+2024/4/14 强制高度会导致目标某些组件丢失高度
+*/
 div,
 img,
 image,
 video {
-  height: auto !important;
+  height: auto;
 }
-iframe,a,img,image{
-  pointer-events:none
+iframe,
+a,
+img,
+image {
+  pointer-events: none;
 }
 ._s-dialog * {
   font-size: 16px;
@@ -130,7 +136,7 @@ iframe,a,img,image{
   box-sizing: border-box;
   border: 1px solid #999;
   background-color: rgba(103, 179, 255, 0.4);
-  pointer-events:none;
+  pointer-events: none;
   z-index: 2147483645;
 }
 ._s-form {

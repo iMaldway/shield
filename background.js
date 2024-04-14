@@ -11,13 +11,13 @@ function handle(request, sender, sendResponse) {
   // 动态注入手动选择框css
   if (request && request.dialogCSS === 'insert') {
     chrome.scripting.insertCSS({
-      origin: 'USER',
+      origin: 'AUTHOR',
       target: { tabId: sender.tab.id, allFrames: true },
       files: ['style/interception.css']
     })
-  } else if(request && request.dialogCSS === 'remove') {
+  } else if (request && request.dialogCSS === 'remove') {
     chrome.scripting.removeCSS({
-      origin: 'USER',
+      origin: 'AUTHOR',
       target: { tabId: sender.tab.id, allFrames: true },
       files: ['style/interception.css']
     })
@@ -26,13 +26,13 @@ function handle(request, sender, sendResponse) {
   if (request && request.insertCSS) {
     if (request.insertCSS === 'insert') {
       chrome.scripting.insertCSS({
-        origin: 'USER',
+        origin: 'AUTHOR',
         target: { tabId: sender.tab.id, allFrames: true },
         files: ['style/page.css']
       })
-    } else if(request && request.insertCSS === 'remove') {
+    } else if (request && request.insertCSS === 'remove') {
       chrome.scripting.removeCSS({
-        origin: 'USER',
+        origin: 'AUTHOR',
         target: { tabId: sender.tab.id, allFrames: true },
         files: ['style/page.css']
       })
